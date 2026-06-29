@@ -39,13 +39,15 @@ A comparative implementation of three distinct NLP model paradigms — **represe
 
 ## Results Summary
 
-| Model Variant | Primary Metric (Precision / Recall / F1) | Generative Quality Metric (BLEU / ROUGE / Perplexity) | Key Observations |
-|---|---|---|---|
-| **BERT** (`bert-base-uncased`) | P=0.8659 / R=0.8724 / F1=0.8692 | N/A (classification task) | Bidirectional WordPiece attention gives strong, stable classification performance; no native generation capability. |
-| **GPT-2** (`distilgpt2`) | N/A (generative task) | BLEU≈0.017, ROUGE-1≈0.104, ROUGE-L≈0.0875, Perplexity≈56.85 | Autoregressive BPE decoding produces fluent, grammatical continuations even when lexical overlap with one reference is low. |
-| **Text-GAN** (1D-CNN, word-level) | Acc=P=R=F1=1.0000 (discriminator) | BLEU≈0.0002, ROUGE-1≈0.0034, ROUGE-L≈0.0034 | Discriminator achieved a near-perfect score, which saturates the generator's gradient signal (a documented GAN training pathology) — see Part 7 of the notebook for full analysis. |
+*(From a genuine from-scratch training run — all cached checkpoints in Drive were cleared first, so these reflect real per-epoch training, not a cache reload. Full per-epoch tables are in `artifacts/TRAINING_HISTORY.md`.)*
 
-*Full discussion of why these numbers turned out this way — including the discriminator-dominance diagnosis for the GAN — is in **Part 7: Analytical Discussion** of the notebook.*
+| Model Variant | Primary Metric (Precision / Recall / F1) | Generative Quality Metric (BLEU / ROUGE / Perplexity) | Training Time/Epoch | Key Observations |
+|---|---|---|---|---|
+| **BERT** (`bert-base-uncased`) | P=0.8709 / R=0.8480 / F1=0.8593 | N/A (classification task) | 180.76s | Bidirectional WordPiece attention gives strong, stable classification performance; no native generation capability. |
+| **GPT-2** (`distilgpt2`) | N/A (generative task) | BLEU≈0.0165, ROUGE-1≈0.0976, ROUGE-L≈0.0851, Perplexity≈56.90 | 83.35s | Autoregressive BPE decoding produces fluent, grammatical continuations even when lexical overlap with one reference is low. |
+| **Text-GAN** (1D-CNN, word-level) | Acc=0.9961 / P=1.0000 / R=0.9922 / F1=0.9961 (discriminator) | BLEU≈0.0012, ROUGE-1≈0.0051, ROUGE-L≈0.0051 | 2.37s | Discriminator pulled ahead of the generator for most of training (oscillating, not flat) — see Part 7 of the notebook for the full epoch-by-epoch diagnosis. |
+
+*Full discussion of why these numbers turned out this way — including the epoch-by-epoch discriminator/generator imbalance diagnosis for the GAN — is in **Part 7: Analytical Discussion** of the notebook.*
 
 ## Repository Structure
 
