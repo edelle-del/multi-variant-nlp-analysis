@@ -53,7 +53,11 @@ A comparative implementation of three distinct NLP model paradigms — **represe
 .
 ├── README.md
 ├── ACT_4_Multi_Variant_Text_Analysis_and_Generation__BERT__GPT__and_GANs_.ipynb
-└── ACT_4_Lumabi_Manuel_Santillan_ipynb_-_Colab.pdf   # exported, fully-run notebook
+├── ACT_4_Lumabi_Manuel_Santillan_ipynb_-_Colab.pdf   # exported, fully-run notebook
+└── artifacts/
+    ├── TRAINING_HISTORY.md            # final per-model metrics + notes on epoch-level logging
+    ├── training_history_summary.csv   # same data in machine-readable form
+    └── TEST_INFERENCE_LOG.md          # standalone log of qualitative generation samples (GPT, Text-GAN) and BERT's classification metrics
 ```
 
 ## Model Checkpoints
@@ -75,6 +79,12 @@ The notebook's checkpoint logic automatically detects and loads these files from
 2. Run all cells top-to-bottom (**Runtime → Run all**). A GPU runtime is recommended (**Runtime → Change runtime type → T4 GPU**) for the BERT and GPT-2 training cells.
 3. When prompted, authorize Google Drive access — this is required for the checkpoint save/reload pipeline.
 4. All metrics (Precision/Recall/F1, Perplexity, BLEU/ROUGE, Discriminator Accuracy) print inline and are consolidated automatically into the Part 6 comparison matrix.
+
+## Training Histories & Test Inferences
+
+Per-epoch training logs (loss per epoch, training time per epoch) print directly in the notebook's training cells whenever a model trains from scratch — the notebook's checkpoint-detection logic skips training and goes straight to evaluation if cached weights already exist in the linked Drive folder, which is what happened in the run captured in the submitted PDF. See [`artifacts/TRAINING_HISTORY.md`](artifacts/TRAINING_HISTORY.md) for the final metrics from that run plus notes on regenerating fresh per-epoch logs.
+
+Qualitative test inference samples (GPT-2 prompt completions, Text-GAN decoded sentences, and BERT's classification metrics) are extracted as a standalone log in [`artifacts/TEST_INFERENCE_LOG.md`](artifacts/TEST_INFERENCE_LOG.md), in addition to appearing inline in the notebook's Part 3 and Part 5 cells.
 
 ## Dataset Repository Link
 
